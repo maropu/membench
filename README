@@ -1,0 +1,11 @@
+membench: A micro-benchmark for memory stuffs such as caches & TLB
+=================
+
+Overview
+-----------
+
+History
+-----------
+2012-10-16 version 0.1.0:
+* Basic functions implemented, and a first release.
+
