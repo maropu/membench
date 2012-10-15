@@ -57,6 +57,7 @@ struct pchain_t *cachebench_init(int r,
 
   /* Link the tail to the head */
   p->next = (struct pchain_t *)*mem;
+  return p->next;
 }
 
 void run_cachebench(uint64_t n, struct pchain_t *chains) {
@@ -74,7 +75,7 @@ int main(int argc, char **argv) {
   const uint64_t nloop = 1000000;
   const int range_min = 16;
   const int range_max = 27;
-  const int strides[] = {4, 16, 64, 256, 1024, 4096};
+  const int strides[] = {16, 64, 256, 1024, 4096};
 
   /* Show a header */
   fprintf(stdout,"Show Cache Penalty Benchmarks(ns):\n");

@@ -60,6 +60,7 @@ struct pchain_t *tlbbench_init(int nslot,
 
   /* Link the tail to the head */
   p->next = (struct pchain_t *)*mem;
+  return p->next;
 }
 
 void run_tlbbench(uint64_t n, struct pchain_t *chains) {
