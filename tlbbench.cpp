@@ -76,25 +76,25 @@ void destroy_chains(char *mem) {
 
 int main(int argc, char **argv) {
   const uint64_t nloop = 10000000;
-  const int slide_min = 2;
-  const int slide_max = 16;
-  const int slots[] = {512, 1024, 2048, 4096, 8192};
+  const int spot_min = 4;
+  const int spot_max = 17;
+  const int slides[] = {1024, 2048, 4096, 8192, 16384, 32768, 65536};
 
   /* Show a header */
   fprintf(stdout,"Show TLB Penalty Benchmarks(ns):\n");
-  fprintf(stdout, "Slot\t| Slide\t");
-  for (int i = slide_min; i < slide_max; i++)
-    fprintf(stdout, "\t2^%dB", i);
+  fprintf(stdout, "Slide\t| Slot\t");
+  for (int i = spot_min; i < spot_max; i++)
+    fprintf(stdout, "\t2^%d", i);
   fprintf(stdout, "\n");
   fprintf(stdout,"========================\n");
 
-  for (int i = 0; i < sizeof(slots) / sizeof(slots[0]); i++) {
+  for (int i = 0; i < sizeof(slides) / sizeof(slides[0]); i++) {
     std::vector<double> tv;
 
     /* Slide from 4B to 64KiB */
-    for (int j = slide_min; j < slide_max; j++) {
+    for (int j = spot_min; j < spot_max; j++) {
       char *mem = NULL;
-      struct pchain_t *p = tlbbench_init(slots[i], 1U << j, &mem);
+      struct pchain_t *p = tlbbench_init(1U << j, slides[i], &mem);
 
       /* Do benchmarking */
       BenchmarkTimer t;
@@ -104,7 +104,7 @@ int main(int argc, char **argv) {
       destroy_chains(mem);
     }
 
-    fprintf(stdout, "%d\t|\t", slots[i]);
+    fprintf(stdout, "%d\t|\t", slides[i]);
     for (int j = 0; j < tv.size(); j++)
       fprintf(stdout, "\t%4.2lf", (tv[j] / nloop) * 1000000000);
     fprintf(stdout, "\n");

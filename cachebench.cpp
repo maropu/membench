@@ -91,7 +91,8 @@ int main(int argc, char **argv) {
     /* Range from 64KiB to 64MiB */
     for (int j = range_min; j < range_max; j++) {
       char *mem = NULL;
-      struct pchain_t *p = cachebench_init(1U << j, strides[i], &mem);
+      struct pchain_t *p =
+          cachebench_init(1U << j, strides[i], &mem);
 
       /* Do benchmarking */
       BenchmarkTimer t;
